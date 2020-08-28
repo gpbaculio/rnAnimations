@@ -1,21 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import OnBoarding from './src/Authentication/OnBoarding';
+import { LoadAssets } from './src/components';
 
+const fonts = {
+   SFProTextBold: require('./assets/fonts/SF-Pro-Text-Bold.otf'),
+   SFProTextSemiBold: require('./assets/fonts/SF-Pro-Text-Semibold.otf'),
+   SFProTextRegular: require('./assets/fonts/SF-Pro-Text-Regular.otf'),
+};
+
+const AuthStack = createStackNavigator();
+
+const AuthNavigator = () => (
+   <AuthStack.Navigator headerMode="none">
+      <AuthStack.Screen name="OnBoarding" component={OnBoarding} />
+   </AuthStack.Navigator>
+);
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+   return (
+      <LoadAssets {...{ fonts }}>
+         <AuthNavigator />
+      </LoadAssets>
+   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
