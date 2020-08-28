@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { Dimensions } from 'react-native';
+import { Dimensions, Image } from 'react-native';
+import { BORDER_RADIUS } from './OnBoarding';
 
 const { width, height } = Dimensions.get('window');
 
@@ -9,9 +10,10 @@ export const SLIDE_HEIGHT = 0.61 * height;
 interface SlideProps {
   title: string;
   right?: boolean;
+  picture: number;
 }
 
-const Slide = ({ title, right }: SlideProps) => {
+const Slide = ({ title, right, picture }: SlideProps) => {
   const transform = [
     {
       translateY: (SLIDE_HEIGHT - 100) / 2,
@@ -25,6 +27,9 @@ const Slide = ({ title, right }: SlideProps) => {
   ];
   return (
     <Container>
+      <ImageUnderlay>
+        <StyledImg source={picture} />
+      </ImageUnderlay>
       <TitleContainer
         style={{
           transform,
@@ -37,6 +42,26 @@ const Slide = ({ title, right }: SlideProps) => {
 };
 
 export default Slide;
+
+const StyledImg = styled(Image)`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: undefined;
+  height: undefined;
+  border-bottom-right-radius: ${BORDER_RADIUS}px;
+`;
+
+const ImageUnderlay = styled.View`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  justify-content: flex-end;
+`;
 
 const Container = styled.View`
   width: ${width}px;

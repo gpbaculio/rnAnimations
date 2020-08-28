@@ -16,6 +16,7 @@ const slides = [
     description:
       "Confused about your outfit? Don't worry! Find the best outfit here",
     color: '#BFEAF5',
+    picture: require('../../../assets/1.png'),
   },
   {
     title: 'Playful',
@@ -23,6 +24,7 @@ const slides = [
     description:
       'Hating the clothes in your wardrobe? Explore hundreds of outfit ideas',
     color: '#BEECC4',
+    picture: require('../../../assets/2.png'),
   },
   {
     title: 'Excentric',
@@ -30,6 +32,7 @@ const slides = [
     description:
       'Create your individual & unique style and look amazing everyday',
     color: '#FFE4D9',
+    picture: require('../../../assets/3.png'),
   },
   {
     title: 'Funky',
@@ -37,9 +40,10 @@ const slides = [
     description:
       'Discover the latest trends in fashion and explore your personality',
     color: '#FFDDDD',
+    picture: require('../../../assets/4.png'),
   },
 ];
-const BORDER_RADIUS = 75;
+export const BORDER_RADIUS = 75;
 const OnBoarding = () => {
   const scrollRef = useRef<Animated.ScrollView>(null);
   const { scrollHandler, x } = useScrollHandler();
@@ -59,24 +63,26 @@ const OnBoarding = () => {
           bounces={false}
           {...scrollHandler}
         >
-          {slides.map(({ title }, index) => (
-            <Slide key={index} right={!!(index % 2)} {...{ title }} />
+          {slides.map(({ title, picture }, index) => (
+            <Slide key={index} right={!!(index % 2)} {...{ title, picture }} />
           ))}
         </Animated.ScrollView>
       </Slider>
       <FooterSection>
         <FooterOverlay style={{ backgroundColor }} />
+        <SliderPagination>
+          {slides.map((_, index) => (
+            <Dot
+              key={index}
+              {...{ index, x, currentIndex: divide(x, width) }}
+            />
+          ))}
+        </SliderPagination>
+
         <Footer>
-          <SliderPagination>
-            {slides.map((_, index) => (
-              <Dot
-                key={index}
-                {...{ index, x, currentIndex: divide(x, width) }}
-              />
-            ))}
-          </SliderPagination>
           <FooterContent
             style={{
+              borderTopLeftRadius: BORDER_RADIUS,
               width: width * slides.length,
               transform: [{ translateX: multiply(x, -1) }],
             }}
@@ -114,7 +120,9 @@ const SliderPagination = styled(Animated.View)`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  border-top-left-radius: ${BORDER_RADIUS}px;
   z-index: 99;
+  background-color: #fff;
 `;
 
 const Container = styled.View`
@@ -129,6 +137,8 @@ const Slider = styled(Animated.View)`
 
 const FooterSection = styled.View`
   flex: 1;
+  border-top-left-radius: ${BORDER_RADIUS}px;
+  background-color: red;
 `;
 
 const FooterOverlay = styled(Animated.View)`
@@ -141,11 +151,12 @@ const FooterOverlay = styled(Animated.View)`
 
 const Footer = styled.View`
   flex: 1;
+  border-top-left-radius: ${BORDER_RADIUS}px;
+  background-color: #fff;
 `;
 
 const FooterContent = styled(Animated.View)`
   flex: 1;
-  flex-direction: row;
-  background-color: #fff;
   border-top-left-radius: ${BORDER_RADIUS}px;
+  flex-direction: row;
 `;

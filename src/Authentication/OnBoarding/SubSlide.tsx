@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { Button } from '../../components';
+import { BORDER_RADIUS } from './OnBoarding';
 
 interface SubSlideProps {
   subTitle: string;
