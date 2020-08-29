@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { Dimensions, Image } from 'react-native';
-import { BORDER_RADIUS } from './OnBoarding';
 
 const { width, height } = Dimensions.get('window');
 
@@ -28,7 +27,7 @@ const Slide = ({ title, right, picture }: SlideProps) => {
   return (
     <Container>
       <ImageUnderlay>
-        <StyledImg source={picture} />
+        <StyledOnBoardingImg source={picture} />
       </ImageUnderlay>
       <TitleContainer
         style={{
@@ -43,15 +42,13 @@ const Slide = ({ title, right, picture }: SlideProps) => {
 
 export default Slide;
 
-const StyledImg = styled(Image)`
-  position: absolute;
-  left: 0;
+export const StyledOnBoardingImg = styled(Image)`
   right: 0;
-  top: 0;
+  margin-left: auto
+  margin-right: auto;
   bottom: 0;
-  width: undefined;
-  height: undefined;
-  border-bottom-right-radius: ${BORDER_RADIUS}px;
+  width: ${width / 1.4}px;
+  height: ${width}px;
 `;
 
 const ImageUnderlay = styled.View`

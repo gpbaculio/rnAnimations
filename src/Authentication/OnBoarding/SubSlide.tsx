@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { Button } from '../../components';
-import { BORDER_RADIUS } from './OnBoarding';
+import { Button, SubTitle, Description } from '../../components';
 
 interface SubSlideProps {
   subTitle: string;
@@ -31,21 +30,4 @@ const Container = styled.View`
   justify-content: center;
   align-items: center;
   padding: 44px;
-`;
-
-const SubTitle = styled.Text`
-  font-family: SFProTextSemiBold;
-  font-size: 24px;
-  line-height: 30px;
-  color: #0c0d34;
-  margin-bottom: 12px;
-`;
-
-const Description = styled.Text`
-  font-family: SFProTextRegular;
-  font-size: 16px;
-  line-height: 24px;
-  color: #0c0d34;
-  text-align: center;
-  margin-bottom: 40px;
 `;

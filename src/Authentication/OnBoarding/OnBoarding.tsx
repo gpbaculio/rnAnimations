@@ -7,6 +7,7 @@ import { interpolateColor, useScrollHandler } from 'react-native-redash';
 import Slide, { SLIDE_HEIGHT } from './Slide';
 import SubSlide from './SubSlide';
 import Dot from './Dot';
+import { StackNavigationProps, Routes } from '../../Routes';
 
 const { width } = Dimensions.get('window');
 const slides = [
@@ -40,11 +41,14 @@ const slides = [
     description:
       'Discover the latest trends in fashion and explore your personality',
     color: '#FFDDDD',
-    picture: require('../../../assets/4.png'),
+    picture: require('../../../assets/5.png'),
   },
 ];
+export const assets = slides.map((i) => i.picture);
 export const BORDER_RADIUS = 75;
-const OnBoarding = () => {
+const OnBoarding = ({
+  navigation,
+}: StackNavigationProps<Routes, 'OnBoarding'>) => {
   const scrollRef = useRef<Animated.ScrollView>(null);
   const { scrollHandler, x } = useScrollHandler();
   const backgroundColor = interpolateColor(x, {
@@ -78,7 +82,6 @@ const OnBoarding = () => {
             />
           ))}
         </SliderPagination>
-
         <Footer>
           <FooterContent
             style={{
@@ -87,20 +90,24 @@ const OnBoarding = () => {
               transform: [{ translateX: multiply(x, -1) }],
             }}
           >
-            {slides.map(({ subTitle, description }, index) => (
-              <SubSlide
-                onPress={() => {
-                  if (scrollRef.current) {
-                    scrollRef.current
-                      .getNode()
-                      .scrollTo({ x: width * (index + 1), animated: true });
-                  }
-                }}
-                key={index}
-                last={index === slides.length - 1}
-                {...{ subTitle, description, x }}
-              />
-            ))}
+            {slides.map(({ subTitle, description }, index) => {
+              const last = index === slides.length - 1;
+              return (
+                <SubSlide
+                  onPress={() => {
+                    if (last) {
+                      navigation.navigate('Welcome');
+                    } else {
+                      scrollRef!
+                        .current!.getNode()
+                        .scrollTo({ x: width * (index + 1), animated: true });
+                    }
+                  }}
+                  key={index}
+                  {...{ subTitle, description, last }}
+                />
+              );
+            })}
           </FooterContent>
         </Footer>
       </FooterSection>
