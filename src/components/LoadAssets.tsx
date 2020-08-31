@@ -5,6 +5,7 @@ import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import { InitialState, NavigationContainer } from '@react-navigation/native';
 import Constants from 'expo-constants';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const NAVIGATION_STATE_KEY = `NAVIGATION_STATE_KEY-${Constants.manifest.sdkVersion}`;
 
@@ -65,9 +66,11 @@ const LoadAssets = ({ assets, fonts, children }: LoadAssetsProps) => {
     return <AppLoading />;
   }
   return (
-    <NavigationContainer {...{ onStateChange, initialState }}>
-      {children}
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer {...{ onStateChange, initialState }}>
+        {children}
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 };
 

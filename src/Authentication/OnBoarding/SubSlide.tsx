@@ -27,7 +27,6 @@ export default SubSlide;
 
 const Container = styled.View`
   flex: 1;
-  justify-content: center;
   align-items: center;
-  padding: 44px;
+  padding-horizontal: 24px;
 `;

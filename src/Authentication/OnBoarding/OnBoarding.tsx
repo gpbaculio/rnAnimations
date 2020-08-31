@@ -4,10 +4,10 @@ import styled from 'styled-components/native';
 import Animated, { multiply, divide } from 'react-native-reanimated';
 import { interpolateColor, useScrollHandler } from 'react-native-redash';
 
-import Slide, { SLIDE_HEIGHT } from './Slide';
+import Slide from './Slide';
 import SubSlide from './SubSlide';
 import Dot from './Dot';
-import { StackNavigationProps, Routes } from '../../Routes';
+import { StackNavigationProps, Routes } from '../../Navigation';
 
 const { width } = Dimensions.get('window');
 const slides = [
@@ -17,7 +17,7 @@ const slides = [
     description:
       "Confused about your outfit? Don't worry! Find the best outfit here",
     color: '#BFEAF5',
-    picture: require('../../../assets/1.png'),
+    picture: require('../../../assets/images/1.png'),
   },
   {
     title: 'Playful',
@@ -25,7 +25,7 @@ const slides = [
     description:
       'Hating the clothes in your wardrobe? Explore hundreds of outfit ideas',
     color: '#BEECC4',
-    picture: require('../../../assets/2.png'),
+    picture: require('../../../assets/images/2.png'),
   },
   {
     title: 'Excentric',
@@ -33,7 +33,7 @@ const slides = [
     description:
       'Create your individual & unique style and look amazing everyday',
     color: '#FFE4D9',
-    picture: require('../../../assets/3.png'),
+    picture: require('../../../assets/images/3.png'),
   },
   {
     title: 'Funky',
@@ -41,11 +41,14 @@ const slides = [
     description:
       'Discover the latest trends in fashion and explore your personality',
     color: '#FFDDDD',
-    picture: require('../../../assets/5.png'),
+    picture: require('../../../assets/images/5.png'),
   },
 ];
+
 export const assets = slides.map((i) => i.picture);
+
 export const BORDER_RADIUS = 75;
+
 const OnBoarding = ({
   navigation,
 }: StackNavigationProps<Routes, 'OnBoarding'>) => {
@@ -74,15 +77,15 @@ const OnBoarding = ({
       </Slider>
       <FooterSection>
         <FooterOverlay style={{ backgroundColor }} />
-        <SliderPagination>
-          {slides.map((_, index) => (
-            <Dot
-              key={index}
-              {...{ index, x, currentIndex: divide(x, width) }}
-            />
-          ))}
-        </SliderPagination>
         <Footer>
+          <SliderPagination>
+            {slides.map((_, index) => (
+              <Dot
+                key={index}
+                {...{ index, x, currentIndex: divide(x, width) }}
+              />
+            ))}
+          </SliderPagination>
           <FooterContent
             style={{
               borderTopLeftRadius: BORDER_RADIUS,
@@ -118,18 +121,14 @@ const OnBoarding = ({
 export default OnBoarding;
 
 const SliderPagination = styled(Animated.View)`
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  width: 100%;
   height: ${BORDER_RADIUS}px;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   border-top-left-radius: ${BORDER_RADIUS}px;
   z-index: 99;
-  background-color: #fff;
+  background-color: transparent;
 `;
 
 const Container = styled.View`
@@ -138,14 +137,14 @@ const Container = styled.View`
 `;
 
 const Slider = styled(Animated.View)`
-  height: ${SLIDE_HEIGHT}px;
+  flex: 0.6;
   border-bottom-right-radius: ${BORDER_RADIUS}px;
 `;
 
 const FooterSection = styled.View`
-  flex: 1;
+  flex: 0.4;
   border-top-left-radius: ${BORDER_RADIUS}px;
-  background-color: red;
+  background-color: #fff;
 `;
 
 const FooterOverlay = styled(Animated.View)`

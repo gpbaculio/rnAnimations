@@ -1,10 +1,10 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
 
-import { Routes } from './src/Routes';
+import Navigation from './src/Navigation';
 import { LoadAssets } from './src/components';
-import OnBoarding, { onBoardingAssets } from './src/Authentication/OnBoarding';
-import Welcome, { welcomeAssets } from './src/Authentication/Welcome';
+import { onBoardingAssets } from './src/Authentication/OnBoarding';
+import { welcomeAssets } from './src/Authentication/Welcome';
+import { StatusBar } from 'react-native';
 
 const assets = [...onBoardingAssets, ...welcomeAssets];
 const fonts = {
@@ -13,19 +13,11 @@ const fonts = {
   SFProTextRegular: require('./assets/fonts/SF-Pro-Text-Regular.otf'),
 };
 
-const AuthStack = createStackNavigator<Routes>();
-
-const AuthNavigator = () => (
-  <AuthStack.Navigator headerMode="none">
-    <AuthStack.Screen name="OnBoarding" component={OnBoarding} />
-    <AuthStack.Screen name="Welcome" component={Welcome} />
-  </AuthStack.Navigator>
-);
-
 export default function App() {
   return (
     <LoadAssets {...{ fonts, assets }}>
-      <AuthNavigator />
+      <StatusBar hidden />
+      <Navigation />
     </LoadAssets>
   );
 }

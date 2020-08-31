@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { Platform } from 'react-native';
 
 const Description = styled.Text`
   font-family: SFProTextRegular;
@@ -6,7 +7,7 @@ const Description = styled.Text`
   line-height: 24px;
   color: #0c0d34;
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: ${Platform.OS === 'ios' ? 40 : 20}px;
 `;
 
 export default Description;
