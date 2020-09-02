@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import styled, { css } from 'styled-components/native';
 import { Platform } from 'react-native';
-import { BORDER_RADIUS } from './constants';
+import { BORDER_RADIUS } from '../../components/constants';
 
 interface MainContentProps {
   width: number;
@@ -9,21 +9,19 @@ interface MainContentProps {
   children: ReactNode;
 }
 
-const MainContent = ({ width, source, children }: MainContentProps) => {
-  return (
-    <MainContentSection>
-      <MainContentImageOverlay
-        height={width}
-        resizeMode="repeat"
-        source={source}
-      />
-      <MainContentContainer topRightRadius bottomLeftRadius bottomRightRadius>
-        {children}
-      </MainContentContainer>
-      <BottomOverlay />
-    </MainContentSection>
-  );
-};
+const MainContent = ({ width, source, children }: MainContentProps) => (
+  <MainContentSection>
+    <MainContentImageOverlay
+      height={width}
+      resizeMode="repeat"
+      source={source}
+    />
+    <MainContentContainer topRightRadius bottomLeftRadius bottomRightRadius>
+      {children}
+    </MainContentContainer>
+    <BottomOverlay />
+  </MainContentSection>
+);
 
 export default MainContent;
 

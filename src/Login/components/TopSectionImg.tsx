@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components/native';
-import { BORDER_RADIUS } from './constants';
+import { BORDER_RADIUS } from '../../components/constants';
 
 interface TopSectionImgProps {
   source: number;
