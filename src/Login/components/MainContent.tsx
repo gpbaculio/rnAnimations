@@ -125,7 +125,7 @@ interface MainContentSectionProps {
 
 const MainContentContainer = styled(Animated.View)<MainContentSectionProps>`
   ${Platform.OS !== 'ios'
-    ? 'padding-vertical: 15px;'
+    ? 'padding-vertical: 32px;'
     : 'justify-content: center; flex: 1;'}
   z-index: 2;
   background-color: #fff;
