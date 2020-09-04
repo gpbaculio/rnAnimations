@@ -17,5 +17,5 @@ const ContainerView = styled(Animated.View)`
   background-color: black;
   align-items: center;
   justify-content: center;
-  z-index: 9;
+  z-index: 0;
 `;

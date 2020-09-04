@@ -24,21 +24,24 @@ interface MainContentProps {
 const { width, height } = Dimensions.get('window');
 const MainContent = ({ source, children }: MainContentProps) => {
   const topAndBottomSectionHeight = new Animated.Value(height * 0.2);
+
   const keyBoardWillShow = () => {
-    console.log('keyBoardWillShow');
-    Animated.timing(topAndBottomSectionHeight, {
-      toValue: 0,
-      duration: 100,
-      easing: Easing.in(Easing.ease),
-    }).start();
+    if (Platform.OS !== 'ios') {
+      Animated.timing(topAndBottomSectionHeight, {
+        toValue: 0,
+        duration: 100,
+        easing: Easing.in(Easing.ease),
+      }).start();
+    }
   };
   const keyBoardWillHide = () => {
-    console.log('keyBoardWillHide');
-    Animated.timing(topAndBottomSectionHeight, {
-      toValue: height * 0.2,
-      duration: 100,
-      easing: Easing.out(Easing.ease),
-    }).start();
+    if (Platform.OS !== 'ios') {
+      Animated.timing(topAndBottomSectionHeight, {
+        toValue: height * 0.2,
+        duration: 100,
+        easing: Easing.out(Easing.ease),
+      }).start();
+    }
   };
   useEffect(() => {
     const keyboardWillShowSubscription = Keyboard.addListener(
@@ -121,9 +124,9 @@ interface MainContentSectionProps {
 }
 
 const MainContentContainer = styled(Animated.View)<MainContentSectionProps>`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
+  ${Platform.OS !== 'ios'
+    ? 'padding-vertical: 15px;'
+    : 'justify-content: center; flex: 1;'}
   z-index: 2;
   background-color: #fff;
   ${(props) => css`
@@ -157,9 +160,10 @@ const MainContentImageOverlay = styled.Image`
 
 const MainContentSection = styled.KeyboardAvoidingView`
   flex: 1
-  background-color: #fff;
+  background-color: black;
   border-bottom-color: black;
   border-bottom-width: 1px;
+  z-index: 99
 `;
 
 const AppleIcon = styled.Image`

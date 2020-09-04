@@ -152,6 +152,7 @@ const RememberMeContainer = styled.View`
 
 const Container = styled.View`
   flex: 1;
+  background-color: #fff;
 `;
 
 interface StylesProps {
@@ -164,6 +165,8 @@ interface StylesProps {
 const styles = StyleSheet.create<StylesProps>({
   container: {
     paddingHorizontal: 35,
+    backgroundColor: '#fff',
+    borderRadius: 75,
   },
   rememberMeText: {
     marginLeft: 6,
