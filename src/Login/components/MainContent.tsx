@@ -1,29 +1,117 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import styled, { css } from 'styled-components/native';
-import { Platform } from 'react-native';
-import { BORDER_RADIUS } from '../../components/constants';
+import { Dimensions, Platform, Keyboard } from 'react-native';
+import Animated, { Easing } from 'react-native-reanimated';
+import {
+  BORDER_RADIUS,
+  borderOverlayImage,
+  facebookIcon,
+  googleIcon,
+  appleIcon,
+} from '../../components/constants';
+import BottomSection from './BottomSection';
+import ColumnView from '../../components/ColumnView';
+import SocialIconContainer from './SocialIconContainer';
+import IconsSection from './IconsSection';
+import RowView from '../../components/RowView';
+import Typography from '../../components/Typography';
 
 interface MainContentProps {
-  width: number;
   source: number;
   children: ReactNode;
 }
 
-const MainContent = ({ width, source, children }: MainContentProps) => (
-  <MainContentSection>
-    <MainContentImageOverlay
-      height={width}
-      resizeMode="repeat"
-      source={source}
-    />
-    <MainContentContainer topRightRadius bottomLeftRadius bottomRightRadius>
-      {children}
-    </MainContentContainer>
-    <BottomOverlay />
-  </MainContentSection>
-);
+const { width, height } = Dimensions.get('window');
+const MainContent = ({ source, children }: MainContentProps) => {
+  const topAndBottomSectionHeight = new Animated.Value(height * 0.2);
+  const keyBoardWillShow = () => {
+    console.log('keyBoardWillShow');
+    Animated.timing(topAndBottomSectionHeight, {
+      toValue: 0,
+      duration: 100,
+      easing: Easing.in(Easing.ease),
+    }).start();
+  };
+  const keyBoardWillHide = () => {
+    console.log('keyBoardWillHide');
+    Animated.timing(topAndBottomSectionHeight, {
+      toValue: height * 0.2,
+      duration: 100,
+      easing: Easing.out(Easing.ease),
+    }).start();
+  };
+  useEffect(() => {
+    const keyboardWillShowSubscription = Keyboard.addListener(
+      'keyboardDidShow',
+      keyBoardWillShow,
+    );
+    const keyboardWillHideSubscription = Keyboard.addListener(
+      'keyboardDidHide',
+      keyBoardWillHide,
+    );
+    return () => {
+      keyboardWillShowSubscription.remove();
+      keyboardWillHideSubscription.remove();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return (
+    <>
+      <MainContentSection
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <TopSection style={{ height: topAndBottomSectionHeight }}>
+          <BorderOverlayRadius
+            resizeMode="contain"
+            source={borderOverlayImage}
+          />
+        </TopSection>
+        <MainContentImageOverlay resizeMode="repeat" source={source} />
+        <MainContentContainer topRightRadius bottomLeftRadius bottomRightRadius>
+          {children}
+        </MainContentContainer>
+        <BottomOverlay />
+      </MainContentSection>
+      <BottomSection height={topAndBottomSectionHeight}>
+        <ColumnView>
+          <IconsSection>
+            <SocialIconContainer last={false} onPress={() => {}}>
+              <FbIcon resizeMode="contain" source={facebookIcon} />
+            </SocialIconContainer>
+            <SocialIconContainer last={false} onPress={() => {}}>
+              <GoogleIcon resizeMode="contain" source={googleIcon} />
+            </SocialIconContainer>
+            <SocialIconContainer last onPress={() => {}}>
+              <AppleIcon resizeMode="contain" source={appleIcon} />
+            </SocialIconContainer>
+          </IconsSection>
+          <RowView>
+            <Typography color={'#fff'}>Don't have an account?&nbsp;</Typography>
+            <Typography color={'#2CB9B0'}>Sign Up Here</Typography>
+          </RowView>
+        </ColumnView>
+      </BottomSection>
+    </>
+  );
+};
 
 export default MainContent;
+// adjust height to zero on animation keyboard show
+
+const TopSection = styled(Animated.View)`
+  width: ${width}px;
+  background-color: transparent;
+  z-index: 3;
+`;
+
+const BorderOverlayRadius = styled.Image`
+  width: 63px;
+  height: 63px;
+  bottom: -1px;
+  left: -1px;
+  position: absolute;
+  background-color: transparent;
+`;
 
 interface MainContentSectionProps {
   topLeftRadius?: boolean;
@@ -32,7 +120,7 @@ interface MainContentSectionProps {
   bottomRightRadius?: boolean;
 }
 
-const MainContentContainer = styled.View<MainContentSectionProps>`
+const MainContentContainer = styled(Animated.View)<MainContentSectionProps>`
   flex: 1;
   align-items: center;
   justify-content: center;
@@ -59,24 +147,32 @@ const BottomOverlay = styled.View`
   position: absolute;
 `;
 
-interface MainContentImageOverlayProps {
-  height: number;
-}
-
-const MainContentImageOverlay = styled.Image<MainContentImageOverlayProps>`
-  ${(props) => css`
-    width: 100%;
-    height: ${props.height}px;
-    transform: translateY(
-      ${-props.height / 2 + (Platform.OS === 'ios' ? -20 : 0)}px
-    );
-  `}
-  z-index: 0;
+const MainContentImageOverlay = styled.Image` 
+  width: 100%;
+  height: ${width}px; 
+  top: 0;
+  background-color: yellow
   position: absolute;
 `;
 
-const MainContentSection = styled.View`
-  flex: 0.6;
+const MainContentSection = styled.KeyboardAvoidingView`
+  flex: 1
+  background-color: #fff;
   border-bottom-color: black;
   border-bottom-width: 1px;
+`;
+
+const AppleIcon = styled.Image`
+  width: 17.27px;
+  height: 20px;
+`;
+
+const GoogleIcon = styled.Image`
+  width: 19.77px;
+  height: 20px;
+`;
+
+const FbIcon = styled.Image`
+  width: 13px;
+  height: 17px;
 `;

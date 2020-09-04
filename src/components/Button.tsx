@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { RectButton } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 
@@ -11,13 +11,21 @@ interface ButtonProps {
     default: string;
     transparent: string;
   };
+  children?: ReactNode;
 }
 
-const Button = ({ label, variant, onPress, backgroundColors }: ButtonProps) => {
+const Button = ({
+  label,
+  variant,
+  onPress,
+  backgroundColors,
+  children,
+}: ButtonProps) => {
   const backgroundColor = backgroundColors[variant];
   const color = variant === 'primary' ? 'white' : '#0c0d34';
   return (
     <Container style={{ backgroundColor }} {...{ onPress }}>
+      {children && children}
       <Label style={{ color }}>{label}</Label>
     </Container>
   );
@@ -40,7 +48,8 @@ const Container = styled(RectButton)`
   width: 245px;
   justify-content: center;
   align-items: center;
-  margin-vertical: 8px;
+  margin-top: 18px;
+  align-self: center;
 `;
 
 const Label = styled.Text`
