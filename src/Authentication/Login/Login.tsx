@@ -5,6 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 import { topSectionImg, PRIMARY_COLOR } from '../constants';
 import Typography from '../../components/Typography';
@@ -41,6 +42,7 @@ const Login = () => {
     email: '',
     password: '',
   };
+  const navigation = useNavigation();
   const onSubmit = (values: FormValues) => {
     console.log('submit values: ', values);
   };
@@ -48,7 +50,7 @@ const Login = () => {
     setIsChecked(!isChecked);
   };
   const onForgotPaswordClick = () => {
-    console.log('forgot password!');
+    navigation.navigate('ForgotPassword');
   };
   return (
     <Container>

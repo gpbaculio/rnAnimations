@@ -6,6 +6,7 @@ import Welcome from '../Authentication/Welcome';
 import { Routes } from './Routes';
 import Login from '../Authentication/Login';
 import Signup from '../Authentication/Signup';
+import ForgotPassword from '../Authentication/ForgotPassword';
 
 const AuthStack = createStackNavigator<Routes>();
 
@@ -15,6 +16,7 @@ const AuthNavigator = () => (
     <AuthStack.Screen name="Welcome" component={Welcome} />
     <AuthStack.Screen name="Login" component={Login} />
     <AuthStack.Screen name="Signup" component={Signup} />
+    <AuthStack.Screen name="ForgotPassword" component={ForgotPassword} />
   </AuthStack.Navigator>
 );
 
