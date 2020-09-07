@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
-import { STATUSBAR_HEIGHT } from './constants';
+import { STATUSBAR_HEIGHT } from '../Authentication/constants';
 
 interface StatusBarProps {
   backgroundColor: string;

@@ -2,11 +2,8 @@ import React from 'react';
 import { Fontisto, AntDesign } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 
-import {
-  PRIMARY_COLOR,
-  INACTIVE_BORDER_COLOR,
-} from '../../components/constants';
-import ColumnView from '../../components/ColumnView';
+import { PRIMARY_COLOR, INACTIVE_BORDER_COLOR } from '../constants';
+import ColumnView from './ColumnView';
 import { StyleSheet } from 'react-native';
 
 interface TextInputProps {
@@ -41,6 +38,7 @@ const FormInput = ({
       <ContainerView color={color}>
         <Fontisto name={icon} size={20} color={color} />
         <StyledTextInput
+          secureTextEntry={icon === 'locked'}
           onBlur={onBlur}
           onChangeText={onChangeText}
           placeholder={placeholder}

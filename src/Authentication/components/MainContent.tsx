@@ -1,49 +1,68 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useMemo } from 'react';
 import styled, { css } from 'styled-components/native';
 import { Dimensions, Platform, Keyboard } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
+
+import BottomSection from './BottomSection';
+import ColumnView from './ColumnView';
+import SocialIconContainer from './SocialIconContainer';
+import IconsSection from './IconsSection';
+import RowView from './RowView';
+import { Typography } from '../../components';
 import {
   BORDER_RADIUS,
   borderOverlayImage,
   facebookIcon,
   googleIcon,
   appleIcon,
-} from '../../components/constants';
-import BottomSection from './BottomSection';
-import ColumnView from '../../components/ColumnView';
-import SocialIconContainer from './SocialIconContainer';
-import IconsSection from './IconsSection';
-import RowView from '../../components/RowView';
-import Typography from '../../components/Typography';
+} from '../constants';
 
 interface MainContentProps {
   source: number;
   children: ReactNode;
+  leftRadius: boolean;
+  bottomLabel: string;
+  bottomNavLabel: string;
+  bottomNavToRoute: string;
 }
 
 const { width, height } = Dimensions.get('window');
-const MainContent = ({ source, children }: MainContentProps) => {
-  const topAndBottomSectionHeight = new Animated.Value(height * 0.2);
 
-  const keyBoardWillShow = () => {
-    if (Platform.OS !== 'ios') {
-      Animated.timing(topAndBottomSectionHeight, {
-        toValue: 0,
-        duration: 100,
-        easing: Easing.in(Easing.ease),
-      }).start();
-    }
-  };
-  const keyBoardWillHide = () => {
-    if (Platform.OS !== 'ios') {
-      Animated.timing(topAndBottomSectionHeight, {
-        toValue: height * 0.2,
-        duration: 100,
-        easing: Easing.out(Easing.ease),
-      }).start();
-    }
-  };
+const MainContent = ({
+  source,
+  leftRadius,
+  bottomLabel,
+  bottomNavLabel,
+  children,
+  bottomNavToRoute,
+}: MainContentProps) => {
+  const navigation = useNavigation();
+  const topAndBottomSectionHeight = useMemo(
+    () => new Animated.Value(height * 0.2),
+    [],
+  );
+
   useEffect(() => {
+    const keyBoardWillShow = () => {
+      if (Platform.OS !== 'ios') {
+        Animated.timing(topAndBottomSectionHeight, {
+          toValue: 0,
+          duration: 100,
+          easing: Easing.in(Easing.ease),
+        }).start();
+      }
+    };
+    const keyBoardWillHide = () => {
+      if (Platform.OS !== 'ios') {
+        Animated.timing(topAndBottomSectionHeight, {
+          toValue: height * 0.2,
+          duration: 100,
+          easing: Easing.out(Easing.ease),
+        }).start();
+      }
+    };
     const keyboardWillShowSubscription = Keyboard.addListener(
       'keyboardDidShow',
       keyBoardWillShow,
@@ -56,8 +75,11 @@ const MainContent = ({ source, children }: MainContentProps) => {
       keyboardWillShowSubscription.remove();
       keyboardWillHideSubscription.remove();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [topAndBottomSectionHeight]);
+
+  const onSignUpClick = () => {
+    navigation.navigate(bottomNavToRoute);
+  };
   return (
     <>
       <MainContentSection
@@ -65,12 +87,21 @@ const MainContent = ({ source, children }: MainContentProps) => {
       >
         <TopSection style={{ height: topAndBottomSectionHeight }}>
           <BorderOverlayRadius
+            leftRadius={leftRadius}
             resizeMode="contain"
+            style={{
+              transform: [{ rotate: `${leftRadius ? '0deg' : '270deg'}` }],
+            }}
             source={borderOverlayImage}
           />
         </TopSection>
         <MainContentImageOverlay resizeMode="repeat" source={source} />
-        <MainContentContainer topRightRadius bottomLeftRadius bottomRightRadius>
+        <MainContentContainer
+          topLeftRadius={!leftRadius}
+          topRightRadius={leftRadius}
+          bottomLeftRadius
+          bottomRightRadius
+        >
           {children}
         </MainContentContainer>
         <BottomOverlay />
@@ -89,8 +120,13 @@ const MainContent = ({ source, children }: MainContentProps) => {
             </SocialIconContainer>
           </IconsSection>
           <RowView>
-            <Typography color={'#fff'}>Don't have an account?&nbsp;</Typography>
-            <Typography color={'#2CB9B0'}>Sign Up Here</Typography>
+            <Typography color={'#fff'}>{bottomLabel}&nbsp;</Typography>
+            <TouchableWithoutFeedback
+              hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+              onPress={onSignUpClick}
+            >
+              <Typography color={'#2CB9B0'}>{bottomNavLabel}</Typography>
+            </TouchableWithoutFeedback>
           </RowView>
         </ColumnView>
       </BottomSection>
@@ -107,11 +143,15 @@ const TopSection = styled(Animated.View)`
   z-index: 3;
 `;
 
-const BorderOverlayRadius = styled.Image`
+interface BorderOverlayRadiusProps {
+  leftRadius: boolean;
+}
+
+const BorderOverlayRadius = styled.Image<BorderOverlayRadiusProps>`
   width: 63px;
   height: 63px;
   bottom: -1px;
-  left: -1px;
+  ${(props) => (props.leftRadius ? 'left: -1px' : 'right: -1px')}
   position: absolute;
   background-color: transparent;
 `;

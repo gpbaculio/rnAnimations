@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { Button, SubTitle, Description } from '../../components';
+import { FormButton, SubTitle, Description } from '../components';
 
 interface SubSlideProps {
   subTitle: string;
@@ -14,7 +14,7 @@ const SubSlide = ({ subTitle, description, last, onPress }: SubSlideProps) => {
     <Container>
       <SubTitle>{subTitle}</SubTitle>
       <Description>{description}</Description>
-      <Button
+      <FormButton
         onPress={onPress}
         label={last ? "Let's get started" : 'Next'}
         variant={last ? 'primary' : 'default'}

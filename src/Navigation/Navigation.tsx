@@ -4,7 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import OnBoarding from '../Authentication/OnBoarding';
 import Welcome from '../Authentication/Welcome';
 import { Routes } from './Routes';
-import Login from '../Login';
+import Login from '../Authentication/Login';
+import Signup from '../Authentication/Signup';
 
 const AuthStack = createStackNavigator<Routes>();
 
@@ -13,6 +14,7 @@ const AuthNavigator = () => (
     <AuthStack.Screen name="OnBoarding" component={OnBoarding} />
     <AuthStack.Screen name="Welcome" component={Welcome} />
     <AuthStack.Screen name="Login" component={Login} />
+    <AuthStack.Screen name="Signup" component={Signup} />
   </AuthStack.Navigator>
 );
 

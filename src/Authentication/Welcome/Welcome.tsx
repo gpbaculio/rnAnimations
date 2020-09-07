@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { BORDER_RADIUS } from '../OnBoarding/OnBoarding';
 import { StyledOnBoardingImg } from '../OnBoarding/Slide';
-import { SubTitle, Description, Button } from '../../components';
+import { SubTitle, Description, FormButton } from '../components';
 import { StackNavigationProps, Routes } from '../../Navigation';
 import { Platform } from 'react-native';
 
@@ -31,17 +31,17 @@ const Welcome = ({ welcomeImg, navigation }: WelcomeProps) => {
           <Description>
             Login to your account below or signup for an amazing experience
           </Description>
-          <Button
+          <FormButton
             onPress={onLoginPress}
             label={'Have an account? Login'}
             variant={'primary'}
           />
-          <Button
+          <FormButton
             onPress={onJoinUsPress}
             label={"Join us, it's free"}
             variant={'default'}
           />
-          <Button
+          <FormButton
             onPress={onForgotPasswordPress}
             label={'Forgot password?'}
             variant={'transparent'}
