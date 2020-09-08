@@ -18,6 +18,5 @@ export default FormErrorMessage;
 const styles = StyleSheet.create({
   errorMessage: {
     textAlign: 'center',
-    marginTop: 4,
   },
 });

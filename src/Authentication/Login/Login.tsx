@@ -18,6 +18,7 @@ import {
   MainContent,
   FormInput,
   FormErrorMessage,
+  Container,
 } from '../components';
 
 const validationSchema = Yup.object().shape({
@@ -37,12 +38,12 @@ interface FormValues {
 }
 
 const Login = () => {
+  const navigation = useNavigation();
   const [isChecked, setIsChecked] = useState(false);
   const initialValues: FormValues = {
     email: '',
     password: '',
   };
-  const navigation = useNavigation();
   const onSubmit = (values: FormValues) => {
     console.log('submit values: ', values);
   };
@@ -92,8 +93,8 @@ const Login = () => {
                 <FormErrorMessage error={errors.email} />
               )}
               <FormInput
-                value={values.password}
                 icon="locked"
+                value={values.password}
                 placeholder="Your password"
                 onChangeText={handleChange('password')}
                 onBlur={handleBlur('password')}
@@ -104,7 +105,7 @@ const Login = () => {
                 <FormErrorMessage error={errors.password} />
               )}
               <RememberMeSection>
-                <RememberMeContainer>
+                <RowView>
                   <TouchableWithoutFeedback onPress={toggleCheck}>
                     <RowView>
                       <AntDesign
@@ -117,7 +118,7 @@ const Login = () => {
                       </Typography>
                     </RowView>
                   </TouchableWithoutFeedback>
-                </RememberMeContainer>
+                </RowView>
                 <TouchableWithoutFeedback
                   hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
                   onPress={onForgotPaswordClick}
@@ -147,35 +148,12 @@ const RememberMeSection = styled.View`
   margin-top: 8px;
 `;
 
-const RememberMeContainer = styled.View`
-  flex-direction: row;
-`;
-
-const Container = styled.View`
-  flex: 1;
-  background-color: #fff;
-`;
-
 interface StylesProps {
-  title: TextStyle;
-  subTitle: TextStyle;
   rememberMeText: TextStyle;
 }
 
 const styles = StyleSheet.create<StylesProps>({
   rememberMeText: {
     marginLeft: 6,
-  },
-  title: {
-    fontStyle: 'normal',
-    fontWeight: '600',
-    lineHeight: 33,
-    textAlign: 'center',
-    marginBottom: 6,
-  },
-  subTitle: {
-    paddingHorizontal: 25,
-    textAlign: 'center',
-    marginBottom: 18,
   },
 });

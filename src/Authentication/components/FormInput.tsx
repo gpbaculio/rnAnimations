@@ -46,7 +46,7 @@ const FormInput = ({
           underlineColorAndroid="transparent"
         />
         {touched && (
-          <StateIconIndicator
+          <AntDesign
             name={error ? 'closecircle' : 'checkcircle'}
             size={20}
             color={color}
@@ -58,9 +58,7 @@ const FormInput = ({
 };
 
 export default FormInput;
-const StateIconIndicator = styled(AntDesign)`
-  align-self: flex-end;
-`;
+
 const styles = StyleSheet.create({
   container: {
     marginVertical: 8,

@@ -23,9 +23,10 @@ interface MainContentProps {
   source: number;
   children: ReactNode;
   leftRadius: boolean;
-  bottomLabel: string;
-  bottomNavLabel: string;
-  bottomNavToRoute: string;
+  noTopSectionRadius?: boolean;
+  bottomLabel?: string;
+  bottomNavLabel?: string;
+  bottomNavToRoute?: string;
 }
 
 const { width, height } = Dimensions.get('window');
@@ -37,6 +38,7 @@ const MainContent = ({
   bottomNavLabel,
   children,
   bottomNavToRoute,
+  noTopSectionRadius,
 }: MainContentProps) => {
   const navigation = useNavigation();
   const topAndBottomSectionHeight = useMemo(
@@ -76,9 +78,12 @@ const MainContent = ({
       keyboardWillHideSubscription.remove();
     };
   }, [topAndBottomSectionHeight]);
-
-  const onSignUpClick = () => {
-    navigation.navigate(bottomNavToRoute);
+  const withBottomSectionContent =
+    bottomLabel && bottomNavLabel && bottomNavToRoute;
+  const onNavPress = () => {
+    if (bottomNavToRoute) {
+      navigation.navigate(bottomNavToRoute);
+    }
   };
   return (
     <>
@@ -86,19 +91,21 @@ const MainContent = ({
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <TopSection style={{ height: topAndBottomSectionHeight }}>
-          <BorderOverlayRadius
-            leftRadius={leftRadius}
-            resizeMode="contain"
-            style={{
-              transform: [{ rotate: `${leftRadius ? '0deg' : '270deg'}` }],
-            }}
-            source={borderOverlayImage}
-          />
+          {!noTopSectionRadius && (
+            <BorderOverlayRadius
+              leftRadius={leftRadius}
+              resizeMode="contain"
+              style={{
+                transform: [{ rotate: `${leftRadius ? '0deg' : '270deg'}` }],
+              }}
+              source={borderOverlayImage}
+            />
+          )}
         </TopSection>
         <MainContentImageOverlay resizeMode="repeat" source={source} />
         <MainContentContainer
-          topLeftRadius={!leftRadius}
-          topRightRadius={leftRadius}
+          topLeftRadius={noTopSectionRadius || !leftRadius}
+          topRightRadius={noTopSectionRadius || leftRadius}
           bottomLeftRadius
           bottomRightRadius
         >
@@ -107,28 +114,30 @@ const MainContent = ({
         <BottomOverlay />
       </MainContentSection>
       <BottomSection height={topAndBottomSectionHeight}>
-        <ColumnView>
-          <IconsSection>
-            <SocialIconContainer last={false} onPress={() => {}}>
-              <FbIcon resizeMode="contain" source={facebookIcon} />
-            </SocialIconContainer>
-            <SocialIconContainer last={false} onPress={() => {}}>
-              <GoogleIcon resizeMode="contain" source={googleIcon} />
-            </SocialIconContainer>
-            <SocialIconContainer last onPress={() => {}}>
-              <AppleIcon resizeMode="contain" source={appleIcon} />
-            </SocialIconContainer>
-          </IconsSection>
-          <RowView>
-            <Typography color={'#fff'}>{bottomLabel}&nbsp;</Typography>
-            <TouchableWithoutFeedback
-              hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-              onPress={onSignUpClick}
-            >
-              <Typography color={'#2CB9B0'}>{bottomNavLabel}</Typography>
-            </TouchableWithoutFeedback>
-          </RowView>
-        </ColumnView>
+        {withBottomSectionContent && (
+          <ColumnView>
+            <IconsSection>
+              <SocialIconContainer last={false} onPress={() => {}}>
+                <FbIcon resizeMode="contain" source={facebookIcon} />
+              </SocialIconContainer>
+              <SocialIconContainer last={false} onPress={() => {}}>
+                <GoogleIcon resizeMode="contain" source={googleIcon} />
+              </SocialIconContainer>
+              <SocialIconContainer last onPress={() => {}}>
+                <AppleIcon resizeMode="contain" source={appleIcon} />
+              </SocialIconContainer>
+            </IconsSection>
+            <RowView>
+              <Typography color={'#fff'}>{bottomLabel}&nbsp;</Typography>
+              <TouchableWithoutFeedback
+                hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
+                onPress={onNavPress}
+              >
+                <Typography color={'#2CB9B0'}>{bottomNavLabel}</Typography>
+              </TouchableWithoutFeedback>
+            </RowView>
+          </ColumnView>
+        )}
       </BottomSection>
     </>
   );
@@ -164,10 +173,10 @@ interface MainContentSectionProps {
 }
 
 const MainContentContainer = styled(Animated.View)<MainContentSectionProps>`
-  ${Platform.OS !== 'ios'
-    ? 'padding-vertical: 32px;'
-    : 'justify-content: center; flex: 1;'}
+  ${Platform.OS !== 'ios' ? `height: ${height * 0.6}px; ` : 'flex: 1;'}
   z-index: 2;
+  align-items: center;
+  justify-content: center;
   background-color: #fff;
   ${(props) => css`
     ${props.topLeftRadius && `border-top-left-radius: ${BORDER_RADIUS}px;`}
@@ -203,7 +212,7 @@ const MainContentSection = styled.KeyboardAvoidingView`
   background-color: black;
   border-bottom-color: black;
   border-bottom-width: 1px;
-  z-index: 99
+  z-index: 99;
 `;
 
 const AppleIcon = styled.Image`

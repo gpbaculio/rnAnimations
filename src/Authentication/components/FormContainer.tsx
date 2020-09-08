@@ -8,7 +8,16 @@ interface FormContainerProps {
 }
 
 const FormContainer = ({ children }: FormContainerProps) => (
-  <Container>{children}</Container>
+  <Container
+    {...(Platform.OS === 'android' && {
+      contentContainerStyle: {
+        flexGrow: 1,
+        justifyContent: 'center',
+      },
+    })}
+  >
+    {children}
+  </Container>
 );
 
 export default FormContainer;
