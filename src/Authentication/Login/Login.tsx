@@ -44,8 +44,10 @@ const Login = () => {
     email: '',
     password: '',
   };
-  const onSubmit = (values: FormValues) => {
-    console.log('submit values: ', values);
+  const onSubmit = ({ email, password }: FormValues) => {
+    if (email && password) {
+      navigation.navigate('Home');
+    }
   };
   const toggleCheck = () => {
     setIsChecked(!isChecked);

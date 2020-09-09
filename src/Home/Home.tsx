@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import OutfitIdeas from './OutfitIdeas';
 
-const Home = () => {
-  return (
-    <View>
-      <Text>Home</Text>
-    </View>
-  );
-};
+const HomeDrawer = createDrawerNavigator();
 
-export default Home;
+const HomeDrawerNavigator = () => (
+  <HomeDrawer.Navigator>
+    <HomeDrawer.Screen name="OutfitIdeas" component={OutfitIdeas} />
+  </HomeDrawer.Navigator>
+);
+
+export default HomeDrawerNavigator;
