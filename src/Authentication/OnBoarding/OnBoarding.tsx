@@ -45,7 +45,7 @@ const slides = [
   },
 ];
 
-export const assets = slides.map((i) => i.picture);
+export const onBoardingAssets = slides.map((i) => i.picture);
 
 export const BORDER_RADIUS = 75;
 

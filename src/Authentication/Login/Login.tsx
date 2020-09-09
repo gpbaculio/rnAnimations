@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
-import { topSectionImg, PRIMARY_COLOR } from '../constants';
+import { topSectionLogInImg, PRIMARY_COLOR } from '../constants';
 import Typography from '../../components/Typography';
 import {
   FormTitle,
@@ -57,7 +57,7 @@ const Login = () => {
     <Container>
       <MainContent
         leftRadius
-        source={topSectionImg}
+        source={topSectionLogInImg}
         bottomLabel={"Don't have an account?"}
         bottomNavLabel={'Signup Here'}
         bottomNavToRoute="Signup"

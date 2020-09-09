@@ -12,8 +12,6 @@ interface WelcomeProps extends StackNavigationProps<Routes, 'Welcome'> {
   welcomeImg: number;
 }
 
-export const assets = [welcomeImgSrc];
-
 const Welcome = ({ welcomeImg, navigation }: WelcomeProps) => {
   const onLoginPress = () => {
     navigation.navigate('Login');

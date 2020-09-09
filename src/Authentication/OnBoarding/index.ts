@@ -1,1 +1,1 @@
-export { default, assets as onBoardingAssets } from './OnBoarding';
+export { default, onBoardingAssets } from './OnBoarding';

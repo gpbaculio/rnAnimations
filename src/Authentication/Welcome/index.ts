@@ -1,1 +1,1 @@
-export { default, assets as welcomeAssets } from './Welcome';
+export { default } from './Welcome';
