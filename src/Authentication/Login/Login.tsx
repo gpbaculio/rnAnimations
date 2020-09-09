@@ -12,14 +12,13 @@ import Typography from '../../components/Typography';
 import {
   FormTitle,
   FormSubtitle,
-  RowView,
   FormContainer,
   FormButton,
   MainContent,
   FormInput,
   FormErrorMessage,
-  Container,
 } from '../components';
+import { Container, RowView } from '../../components';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()

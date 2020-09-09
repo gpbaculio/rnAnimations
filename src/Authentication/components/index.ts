@@ -1,12 +1,9 @@
 export { default as FormButton } from './FormButton';
 export { default as FormContainer } from './FormContainer';
-export { default as ColumnView } from './ColumnView';
-export { default as Container } from './Container';
 export { default as Description } from './Description';
 export { default as FormErrorMessage } from './FormErrorMessage';
 export { default as FormInput } from './FormInput';
 export { default as FormSubtitle } from './FormSubtitle';
 export { default as FormTitle } from './FormTitle';
 export { default as MainContent } from './MainContent';
-export { default as RowView } from './RowView';
 export { default as SubTitle } from './SubTitle';

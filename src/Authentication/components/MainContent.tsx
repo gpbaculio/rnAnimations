@@ -6,10 +6,9 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
 import BottomSection from './BottomSection';
-import ColumnView from './ColumnView';
+import { ColumnView, RowView } from '../../components';
 import SocialIconContainer from './SocialIconContainer';
 import IconsSection from './IconsSection';
-import RowView from './RowView';
 import { Typography } from '../../components';
 import {
   BORDER_RADIUS,

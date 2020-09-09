@@ -8,6 +8,7 @@ import Login from '../Authentication/Login';
 import Signup from '../Authentication/Signup';
 import ForgotPassword from '../Authentication/ForgotPassword';
 import Home from '../Home';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const AppStack = createStackNavigator();
 const AuthenticationStack = createStackNavigator();
