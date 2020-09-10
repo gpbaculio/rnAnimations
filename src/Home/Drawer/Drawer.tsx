@@ -2,8 +2,8 @@ import React from 'react';
 import { Dimensions, Platform } from 'react-native';
 import styled from 'styled-components/native';
 
+import { RoundIcon, Header } from '../components';
 import { Container, ColumnView } from '../../components';
-import { NavContainer, NavIcon } from './components';
 import {
   bottomSectionDrawerImg,
   iconZap,
@@ -22,11 +22,17 @@ const Drawer = () => {
   return (
     <Container>
       <TopSection>
-        <TopSectionNav>
-          <NavIcon width={14} height={14} source={iconClose} />
-          <NavTitle>MY PROFILE</NavTitle>
-          <NavIcon width={15} height={17.5} source={iconShoppingBag} />
-        </TopSectionNav>
+        <Header
+          title="MY PROFILE"
+          leftSection={{
+            leftNavImgSrc: iconClose,
+            onLeftNavPress: () => true,
+          }}
+          rightSection={{
+            rightNavImgSrc: iconShoppingBag,
+            onRightNavPress: () => true,
+          }}
+        />
       </TopSection>
       <MainContentContainer>
         <TopOverlay />
@@ -35,29 +41,109 @@ const Drawer = () => {
           <UserName>Glendon Philipp Baculio</UserName>
           <Email>gpbaculio@gmail.com</Email>
           <ColumnView>
-            <NavContainer backgroundColor="#2CB9B0" navLabel="Outfit Ideas">
-              <NavIcon width={13.8} height={17.64} source={iconZap} />
+            <NavContainer>
+              <RoundIcon
+                {...{
+                  icon: {
+                    width: 13.8,
+                    height: 17.64,
+                    color: '#fff',
+                  },
+                  container: {
+                    size: 36,
+                    color: '#2CB9B0',
+                  },
+                  source: iconZap,
+                }}
+              />
+              <NavLabel>Outfit Ideas</NavLabel>
             </NavContainer>
-            <NavContainer backgroundColor="#FE5E33" navLabel="Favorite Outfits">
-              <NavIcon width={17} height={14.77} source={iconHeart} />
+            <NavContainer>
+              <RoundIcon
+                {...{
+                  icon: {
+                    width: 17,
+                    height: 14.77,
+                    color: '#fff',
+                  },
+                  container: {
+                    size: 36,
+                    color: '#FE5E33',
+                  },
+                  source: iconHeart,
+                }}
+              />
+              <NavLabel>Favorite Outfits</NavLabel>
+              <NavCount>(26)</NavCount>
             </NavContainer>
-            <NavContainer backgroundColor="#FFC641" navLabel="Edit Profile">
-              <NavIcon width={12.73} height={14.87} source={iconPerson} />
+            <NavContainer>
+              <RoundIcon
+                {...{
+                  icon: {
+                    width: 12.73,
+                    height: 14.87,
+                    color: '#fff',
+                  },
+                  container: {
+                    size: 36,
+                    color: '#FFC641',
+                  },
+                  source: iconPerson,
+                }}
+              />
+              <NavLabel>Edit Profile</NavLabel>
             </NavContainer>
-            <NavContainer
-              backgroundColor="#FF87A2"
-              navLabel="Transaction History"
-            >
-              <NavIcon width={16.87} height={16.87} source={iconClock} />
+            <NavContainer>
+              <RoundIcon
+                {...{
+                  icon: {
+                    width: 16.87,
+                    height: 16.87,
+                    color: '#fff',
+                  },
+                  container: {
+                    size: 36,
+                    color: '#FF87A2',
+                  },
+                  source: iconClock,
+                }}
+              />
+              <NavLabel>Transaction History</NavLabel>
+              <NavCount>(8)</NavCount>
             </NavContainer>
-            <NavContainer
-              backgroundColor="#442CB9"
-              navLabel="Notification Settings"
-            >
-              <NavIcon width={17} height={17} source={iconGear} />
+            <NavContainer>
+              <RoundIcon
+                {...{
+                  icon: {
+                    width: 17,
+                    height: 17,
+                    color: '#fff',
+                  },
+                  container: {
+                    size: 36,
+                    color: '#442CB9',
+                  },
+                  source: iconGear,
+                }}
+              />
+              <NavLabel>Notification Settings</NavLabel>
             </NavContainer>
-            <NavContainer backgroundColor="#0C0D34" navLabel="Logout">
-              <NavIcon width={17} height={13.98} source={iconLogout} />
+            <NavContainer>
+              <RoundIcon
+                {...{
+                  icon: {
+                    width: 17,
+                    height: 13.98,
+                    color: '#fff',
+                  },
+                  container: {
+                    size: 36,
+                    color: '#0C0D34',
+                  },
+                  source: iconLogout,
+                }}
+              />
+              <NavLabel>Logout</NavLabel>
             </NavContainer>
           </ColumnView>
         </MainContent>
@@ -69,22 +155,30 @@ const Drawer = () => {
 
 export default Drawer;
 
-const TopSectionNav = styled.View`
-  width: 100%;
+const NavContainer = styled.View`
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
+  margin-top: 12px;
 `;
 
-const NavTitle = styled.Text`
+const NavLabel = styled.Text`
+  margin-left: 16px;
   font-family: SFProTextRegular;
   font-style: normal;
-  font-weight: 600;
-  font-size: 12px;
-  line-height: 24px;
-  text-align: center;
-  letter-spacing: 1.5px;
-  color: #fff;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #0c0d34;
+`;
+
+const NavCount = styled.Text`
+  margin-left: 6px;
+  font-family: SFProTextRegular;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba(12, 13, 52, 0.3);
 `;
 const UserName = styled.Text`
   font-family: SFProTextRegular;
@@ -122,7 +216,6 @@ const ProfileContainer = styled.View`
 const TopSection = styled.View`
   width: 100%;
   flex: 0.2;
-  padding-top: ${Platform.OS === 'ios' ? 35 : 15}px;
   padding-horizontal: 15px;
   border-bottom-right-radius: 50px;
   background-color: #111747;
