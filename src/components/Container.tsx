@@ -1,12 +1,14 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components/native';
+import { ViewStyle } from 'react-native';
 
 interface ContainerProps {
   children: ReactNode;
+  style?: ViewStyle;
 }
 
-const Container = ({ children }: ContainerProps) => (
-  <ContainerView>{children}</ContainerView>
+const Container = ({ children, style }: ContainerProps) => (
+  <ContainerView style={style}>{children}</ContainerView>
 );
 
 export default Container;

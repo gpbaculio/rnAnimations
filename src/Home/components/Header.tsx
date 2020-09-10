@@ -14,12 +14,16 @@ interface HeaderProps {
     onRightNavPress: () => void;
   };
   title: string;
+  color: string;
+  backgroundColor: string;
 }
 
 const Header = ({
   leftSection: { leftNavImgSrc, onLeftNavPress },
   rightSection: { rightNavImgSrc, onRightNavPress },
   title,
+  color,
+  backgroundColor,
 }: HeaderProps) => (
   <TopSectionNav>
     <RoundIcon
@@ -27,27 +31,27 @@ const Header = ({
         icon: {
           width: 14,
           height: 14,
-          color: '#fff',
+          color,
         },
         container: {
           size: 44,
-          color: '#111747',
+          color: backgroundColor,
         },
         source: leftNavImgSrc,
         onPress: onLeftNavPress,
       }}
     />
-    <NavTitle>{title}</NavTitle>
+    <NavTitle color={color}>{title}</NavTitle>
     <RoundIcon
       {...{
         icon: {
           width: 15,
           height: 17.5,
-          color: '#fff',
+          color,
         },
         container: {
           size: 44,
-          color: '#111747',
+          color: backgroundColor,
         },
         source: rightNavImgSrc,
         onPress: onRightNavPress,
@@ -58,7 +62,12 @@ const Header = ({
 
 export default Header;
 
-const NavTitle = styled.Text`
+interface NavTitleProps {
+  color: string;
+}
+
+const NavTitle = styled.Text<NavTitleProps>`
+  ${(props) => `color: ${props.color}`}
   font-family: SFProTextRegular;
   font-style: normal;
   font-weight: 600;
@@ -66,7 +75,6 @@ const NavTitle = styled.Text`
   line-height: 24px;
   text-align: center;
   letter-spacing: 1.5px;
-  color: #fff;
 `;
 
 const TopSectionNav = styled.View`

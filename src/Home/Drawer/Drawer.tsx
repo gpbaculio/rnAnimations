@@ -23,6 +23,8 @@ const Drawer = () => {
     <Container>
       <TopSection>
         <Header
+          color="#fff"
+          backgroundColor="#111747"
           title="MY PROFILE"
           leftSection={{
             leftNavImgSrc: iconClose,
