@@ -17,7 +17,11 @@ const RoundIcon = ({
 }: RoundIconProps) => {
   if (onPress) {
     return (
-      <PressableNavIconContainer color={containerColor} containerSize={size}>
+      <PressableNavIconContainer
+        onPress={onPress}
+        color={containerColor}
+        containerSize={size}
+      >
         <StyledImage color={color} source={source} {...{ width, height }} />
       </PressableNavIconContainer>
     );

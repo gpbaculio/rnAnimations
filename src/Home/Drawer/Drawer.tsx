@@ -1,6 +1,10 @@
 import React from 'react';
 import { Dimensions, Platform } from 'react-native';
 import styled from 'styled-components/native';
+import {
+  DrawerContentComponentProps,
+  DrawerContentOptions,
+} from '@react-navigation/drawer';
 
 import { RoundIcon, Header } from '../components';
 import { Container, ColumnView } from '../../components';
@@ -15,10 +19,16 @@ import {
   iconClose,
   iconShoppingBag,
 } from '../constants';
+import { DrawerActions } from '@react-navigation/native';
 
 const { height } = Dimensions.get('window');
 
-const Drawer = () => {
+const Drawer = ({
+  navigation,
+}: DrawerContentComponentProps<DrawerContentOptions>) => {
+  const onLeftNavPress = () => {
+    navigation.dispatch(DrawerActions.closeDrawer());
+  };
   return (
     <Container>
       <TopSection>
@@ -28,7 +38,7 @@ const Drawer = () => {
           title="MY PROFILE"
           leftSection={{
             leftNavImgSrc: iconClose,
-            onLeftNavPress: () => true,
+            onLeftNavPress,
           }}
           rightSection={{
             rightNavImgSrc: iconShoppingBag,
