@@ -3,7 +3,6 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import {
-  Container,
   MainContent,
   FormContainer,
   FormTitle,
@@ -17,6 +16,7 @@ import {
   topSectionForgotPasswordSuccessImg,
 } from '../constants';
 import ForgotPasswordSuccess from './ForgotPasswordSuccess';
+import { Container } from '../../components';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
