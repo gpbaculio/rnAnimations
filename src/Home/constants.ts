@@ -10,7 +10,7 @@ export const iconClose = require('../../assets/images/icons/icon-close.png');
 export const iconMenu = require('../../assets/images/icons/icon-menu.png');
 export const outfitIdeasBg = require('../../assets/images/icons/outfit-ideas-bg-pattern.png');
 
-export const assets = [
+export const homeAssets = [
   iconHeart,
   iconClock,
   iconPerson,

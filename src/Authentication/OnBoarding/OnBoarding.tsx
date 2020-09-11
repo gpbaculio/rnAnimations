@@ -3,11 +3,11 @@ import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import Animated, { multiply, divide } from 'react-native-reanimated';
 import { interpolateColor, useScrollHandler } from 'react-native-redash';
+import { useNavigation } from '@react-navigation/native';
 
 import Slide from './Slide';
 import SubSlide from './SubSlide';
 import Dot from './Dot';
-import { StackNavigationProps, Routes } from '../../Navigation';
 
 const { width } = Dimensions.get('window');
 const slides = [
@@ -49,9 +49,8 @@ export const onBoardingAssets = slides.map((i) => i.picture);
 
 export const BORDER_RADIUS = 75;
 
-const OnBoarding = ({
-  navigation,
-}: StackNavigationProps<Routes, 'OnBoarding'>) => {
+const OnBoarding = () => {
+  const navigation = useNavigation();
   const scrollRef = useRef<Animated.ScrollView>(null);
   const { scrollHandler, x } = useScrollHandler();
   const backgroundColor = interpolateColor(x, {

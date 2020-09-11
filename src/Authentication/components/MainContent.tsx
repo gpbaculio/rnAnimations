@@ -202,7 +202,7 @@ const MainContentImageOverlay = styled.Image`
   width: 100%;
   height: ${width}px; 
   top: 0;
-  background-color: yellow
+  background-color: #fff
   position: absolute;
 `;
 

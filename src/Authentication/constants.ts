@@ -15,7 +15,7 @@ export const googleIcon = require('../../assets/images/icons/icon-google.png');
 export const appleIcon = require('../../assets/images/icons/icon-apple.png');
 export const borderOverlayImage = require('../../assets/images/borderPattern.png');
 
-export const assets = [
+export const authenticationAssets = [
   topSectionLogInImg,
   facebookIcon,
   googleIcon,

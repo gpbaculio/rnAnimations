@@ -4,7 +4,9 @@ import Navigation from './src/Navigation';
 import { LoadAssets } from './src/components';
 import { StatusBar } from 'react-native';
 
-import { assets } from './src/Authentication/constants';
+import { onBoardingAssets } from './src/Authentication/OnBoarding';
+import { authenticationAssets } from './src/Authentication/constants';
+import { homeAssets } from './src/Home/constants';
 
 const fonts = {
   SFProTextBold: require('./assets/fonts/SF-Pro-Text-Bold.otf'),
@@ -12,6 +14,7 @@ const fonts = {
   SFProTextRegular: require('./assets/fonts/SF-Pro-Text-Regular.otf'),
 };
 
+const assets = [...onBoardingAssets, ...authenticationAssets, ...homeAssets];
 export default function App() {
   return (
     <LoadAssets {...{ fonts, assets }}>
