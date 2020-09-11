@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 
 import { Header } from '../components';
@@ -7,6 +7,7 @@ import { iconMenu, iconShoppingBag, outfitIdeasBg } from '../constants';
 import { Container } from '../../components';
 import { useNavigation, DrawerActions } from '@react-navigation/native';
 import { borderOverlayImage } from '../../Authentication/constants';
+import { Card } from './components';
 
 const { height } = Dimensions.get('window');
 
@@ -32,7 +33,11 @@ const OutfitIdeas = () => {
           }}
         />
       </TopSection>
-      <Text>OutfitIdasd asdeas</Text>
+      <CardsContainer>
+        <Card position={1} />
+        <Card position={0.5} />
+        <Card position={0} />
+      </CardsContainer>
       <Background>
         <BackgroundImage source={outfitIdeasBg} />
         <BackgroundBottomSection>
@@ -52,6 +57,13 @@ const OutfitIdeas = () => {
 };
 
 export default OutfitIdeas;
+
+const CardsContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+`;
 
 const BorderOverlay = styled.Image`
   width: 65px;
