@@ -1,21 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
+import { useTransition } from 'react-native-redash';
+import { sub } from 'react-native-reanimated';
+import { useNavigation, DrawerActions } from '@react-navigation/native';
 
 import { Header } from '../components';
 import { iconMenu, iconShoppingBag, outfitIdeasBg } from '../constants';
 import { Container } from '../../components';
-import { useNavigation, DrawerActions } from '@react-navigation/native';
 import { borderOverlayImage } from '../../Authentication/constants';
-import { Card } from './components';
+import { Card, Categories } from './components';
 
 const { height } = Dimensions.get('window');
+
+const cards = [
+  {
+    index: 3,
+    source: require('../../../assets/images/4.png'),
+  },
+  {
+    index: 2,
+    source: require('../../../assets/images/3.png'),
+  },
+  {
+    index: 1,
+    source: require('../../../assets/images/2.png'),
+  },
+  {
+    index: 0,
+    source: require('../../../assets/images/1.png'),
+  },
+];
+
+const step = 1 / (cards.length - 1);
 
 const OutfitIdeas = () => {
   const navigation = useNavigation();
   const onLeftNavPress = () => {
     navigation.dispatch(DrawerActions.openDrawer());
   };
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const animIndex = useTransition(currentIndex);
   return (
     <Container>
       <TopSection>
@@ -33,10 +58,22 @@ const OutfitIdeas = () => {
           }}
         />
       </TopSection>
+      <Categories />
       <CardsContainer>
-        <Card position={1} />
-        <Card position={0.5} />
-        <Card position={0} />
+        {cards.map(
+          ({ index, source }) =>
+            currentIndex < index * step + step && (
+              <Card
+                key={index}
+                position={sub(index * step, animIndex)}
+                onSwipe={() => {
+                  setCurrentIndex((prevIndex) => prevIndex + step);
+                }}
+                source={source}
+                step={step}
+              />
+            ),
+        )}
       </CardsContainer>
       <Background>
         <BackgroundImage source={outfitIdeasBg} />
