@@ -43,21 +43,21 @@ const OutfitIdeas = () => {
   const animIndex = useTransition(currentIndex);
   return (
     <Container>
-      <TopSection>
-        <Header
-          color="#0C0D34"
-          backgroundColor="#fafafa"
-          title="OUTFIT IDEAS"
-          leftSection={{
-            leftNavImgSrc: iconMenu,
-            onLeftNavPress,
-          }}
-          rightSection={{
-            rightNavImgSrc: iconShoppingBag,
-            onRightNavPress: () => true,
-          }}
-        />
-      </TopSection>
+      <Header
+        leftIcon={{ width: 14, height: 14 }}
+        rightIcon={{ width: 15, height: 17.5 }}
+        color="#0C0D34"
+        backgroundColor="#fafafa"
+        title="OUTFIT IDEAS"
+        leftSection={{
+          leftNavImgSrc: iconMenu,
+          onLeftNavPress,
+        }}
+        rightSection={{
+          rightNavImgSrc: iconShoppingBag,
+          onRightNavPress: () => true,
+        }}
+      />
       <Categories />
       <CardsContainer>
         {cards.map(
@@ -109,10 +109,6 @@ const BorderOverlay = styled.Image`
   margin-top: -63px;
   right: -1px;
   tint-color: #0c0d34;
-`;
-
-const TopSection = styled.View`
-  padding-horizontal: 21px;
 `;
 
 const Background = styled.View`

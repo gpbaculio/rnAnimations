@@ -16,6 +16,14 @@ interface HeaderProps {
   title: string;
   color: string;
   backgroundColor: string;
+  leftIcon: {
+    width: number;
+    height: number;
+  };
+  rightIcon: {
+    width: number;
+    height: number;
+  };
 }
 
 const Header = ({
@@ -24,13 +32,16 @@ const Header = ({
   title,
   color,
   backgroundColor,
+  leftIcon,
+  rightIcon,
 }: HeaderProps) => (
   <TopSectionNav>
     <RoundIcon
       {...{
         icon: {
-          width: 14,
-          height: 14,
+          // width: 14,
+          // height: 14,
+          ...leftIcon,
           color,
         },
         container: {
@@ -45,8 +56,9 @@ const Header = ({
     <RoundIcon
       {...{
         icon: {
-          width: 15,
-          height: 17.5,
+          // width: 15,
+          // height: 17.5,
+          ...rightIcon,
           color,
         },
         container: {
@@ -78,9 +90,11 @@ const NavTitle = styled.Text<NavTitleProps>`
 `;
 
 const TopSectionNav = styled.View`
-  margin-top: ${Platform.OS === 'ios' ? 35 : 15}px;
+  margin-top: ${Platform.OS === 'ios' ? 35 : 5}px;
+  margin-bottom: ${Platform.OS === 'ios' ? 0 : 5}px;
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding-horizontal: 15px;
 `;

@@ -38,6 +38,8 @@ const Drawer = ({
     <Container>
       <TopSection>
         <Header
+          leftIcon={{ width: 14, height: 14 }}
+          rightIcon={{ width: 15, height: 17.5 }}
           color="#fff"
           backgroundColor="#111747"
           title="MY PROFILE"
@@ -110,7 +112,7 @@ const Drawer = ({
               />
               <NavLabel>Edit Profile</NavLabel>
             </NavContainer>
-            <NavContainer>
+            <NavContainer onPress={onNavPress('TransactionHistory')}>
               <RoundIcon
                 {...{
                   icon: {
@@ -233,7 +235,6 @@ const ProfileContainer = styled.View`
 const TopSection = styled.View`
   width: 100%;
   flex: 0.2;
-  padding-horizontal: 15px;
   border-bottom-right-radius: 50px;
   background-color: #111747;
 `;

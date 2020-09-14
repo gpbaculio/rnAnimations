@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 
-import BorderlessTap from './BorderlessTap';
 import { ConditionalWrap } from '../../../../../components';
+import { BorderlessTap } from '../../../../components';
 
 interface CategoryProps {
   category: {
