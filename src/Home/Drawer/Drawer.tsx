@@ -29,6 +29,11 @@ const Drawer = ({
   const onLeftNavPress = () => {
     navigation.dispatch(DrawerActions.closeDrawer());
   };
+  const onNavPress = (route: string) => {
+    return () => {
+      navigation.navigate(route);
+    };
+  };
   return (
     <Container>
       <TopSection>
@@ -53,7 +58,7 @@ const Drawer = ({
           <UserName>Glendon Philipp Baculio</UserName>
           <Email>gpbaculio@gmail.com</Email>
           <ColumnView>
-            <NavContainer>
+            <NavContainer onPress={onNavPress('OutfitIdeas')}>
               <RoundIcon
                 {...{
                   icon: {
@@ -70,7 +75,7 @@ const Drawer = ({
               />
               <NavLabel>Outfit Ideas</NavLabel>
             </NavContainer>
-            <NavContainer>
+            <NavContainer onPress={onNavPress('FavoriteOutfits')}>
               <RoundIcon
                 {...{
                   icon: {
@@ -167,7 +172,7 @@ const Drawer = ({
 
 export default Drawer;
 
-const NavContainer = styled.View`
+const NavContainer = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   margin-top: 12px;

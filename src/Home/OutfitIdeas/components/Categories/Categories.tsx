@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import Category from './Category';
+import { Category } from './components';
 
 const categories = [
   {
@@ -35,7 +35,7 @@ const categories = [
 const Categories = () => {
   return (
     <Container>
-      <ScrollView horizontal>
+      <ScrollView showsHorizontalScrollIndicator={false} horizontal>
         {categories.map((category) => (
           <Category key={category.id} category={category} />
         ))}
@@ -49,4 +49,5 @@ export default Categories;
 const Container = styled.View`
   margin-top: 8px;
   margin-left: 8px;
+  margin-bottom: 8px;
 `;
