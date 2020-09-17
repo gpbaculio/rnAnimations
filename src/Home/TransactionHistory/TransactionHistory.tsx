@@ -1,70 +1,43 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
-import { LayoutChangeEvent, Platform } from 'react-native';
+import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 import { Container, Typography } from '../../components';
 import { Header } from '../components';
 import { iconBackDark, iconShare } from '../constants';
-import { Footer, Graph } from './components';
-import { GraphPoint } from './components/Graph/Graph';
+import { Footer, Graph, Transaction } from './components';
+import { GraphPoint } from './components/Graph';
 
+const startDate = new Date('2019-09-01').getTime();
+const monthsCount = 6;
+const { height } = Dimensions.get('window');
 const data: GraphPoint[] = [
-  {
-    date: new Date('2019-09-01').getTime(),
-    value: 0,
-    color: 'red',
-    id: '245682',
-  },
-  {
-    date: new Date('2019-10-01').getTime(),
-    value: 0,
-    color: 'red',
-    id: '245692',
-  },
   {
     date: new Date('2019-11-01').getTime(),
     value: 139.42,
     color: '#2CB9B0',
-    id: '245671',
+    id: 245671,
   },
   {
     date: new Date('2019-12-01').getTime(),
     value: 281.23,
     color: '#FE5E33',
-    id: '245672',
-  },
-  {
-    date: new Date('2020-01-01').getTime(),
-    value: 0,
-    color: 'red',
-    id: '245675',
+    id: 245672,
   },
   {
     date: new Date('2020-02-01').getTime(),
     value: 198.54,
     color: '#FFC641',
-    id: '245673',
-  },
-  {
-    date: new Date('2020-03-01').getTime(),
-    value: 0,
-    color: 'red',
-    id: '245612',
+    id: 245673,
   },
 ];
+
 const TransactionHistory = () => {
   const navigation = useNavigation();
   const onLeftNavPress = () => {
     navigation.goBack();
-  };
-  const [footerHeight, setFooterHeight] = useState(0);
-  const onFooterLayout = ({
-    nativeEvent: {
-      layout: { height },
-    },
-  }: LayoutChangeEvent) => {
-    setFooterHeight(height);
   };
   return (
     <Container>
@@ -83,7 +56,7 @@ const TransactionHistory = () => {
           onRightNavPress: () => true,
         }}
       />
-      <Main footerHeight={footerHeight}>
+      <Main>
         <TopSection>
           <TopLeftSection>
             <TotalSpent fontSize={12} color="#0C0D34">
@@ -98,10 +71,17 @@ const TransactionHistory = () => {
           </TopSectionBtn>
         </TopSection>
         <ContentSection>
-          <Graph data={data} />
+          <Graph {...{ data, startDate, monthsCount }} />
+          <ScrollView>
+            {data
+              .sort((a, b) => b.date - a.date)
+              .map((d) => {
+                return <Transaction key={d.id} transaction={d} />;
+              })}
+          </ScrollView>
         </ContentSection>
       </Main>
-      <Footer onLayout={onFooterLayout} />
+      <Footer />
     </Container>
   );
 };
@@ -128,19 +108,13 @@ const TopSectionBtnText = styled(Typography)`
   color: #2cb9b0;
 `;
 
-interface MainProps {
-  footerHeight: number;
-}
-
-const Main = styled.View<MainProps>`
-  ${(props) => ` 
-  margin-bottom: ${
-    Platform.OS === 'ios' ? props.footerHeight - 76 : props.footerHeight - 106
-  }px;
-`}
+const Main = styled.ScrollView` 
+  margin-bottom: ${height * 0.15}px; 
   flex: 1
+  z-index: 1
   background-color: #fff
   flex-direction: column;
+  border-bottom-right-radius: 60px;
   padding-horizontal: 20px;
 `;
 

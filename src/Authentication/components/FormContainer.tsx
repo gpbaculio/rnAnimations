@@ -26,5 +26,5 @@ const Container = styled(Platform.OS === 'ios' ? View : ScrollView)`
   flex-direction: column;
   background-color: #fff;
   padding-horizontal: 35px;
-  border-radius: 75px;
+  border-radius: 60px;
 `;

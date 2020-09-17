@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StyleSheet, TextStyle } from 'react-native';
 import styled from 'styled-components/native';
 import { AntDesign } from '@expo/vector-icons';
@@ -19,6 +19,7 @@ import {
   FormErrorMessage,
 } from '../components';
 import { Container, RowView } from '../../components';
+import { AuthContext } from '../../Navigation/store/context';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -43,15 +44,16 @@ const Login = () => {
     email: '',
     password: '',
   };
+  const { signIn } = useContext(AuthContext);
   const onSubmit = ({ email, password }: FormValues) => {
     if (email && password) {
-      navigation.navigate('Home');
+      signIn({ email, password });
     }
   };
   const toggleCheck = () => {
     setIsChecked(!isChecked);
   };
-  const onForgotPaswordClick = () => {
+  const onForgotPaswordPress = () => {
     navigation.navigate('ForgotPassword');
   };
   return (
@@ -122,7 +124,7 @@ const Login = () => {
                 </RowView>
                 <TouchableWithoutFeedback
                   hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-                  onPress={onForgotPaswordClick}
+                  onPress={onForgotPaswordPress}
                 >
                   <Typography color={PRIMARY_COLOR}>Forgot Password</Typography>
                 </TouchableWithoutFeedback>

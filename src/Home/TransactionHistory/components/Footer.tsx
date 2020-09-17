@@ -1,32 +1,42 @@
 import React from 'react';
-import { Dimensions, LayoutChangeEvent, Platform } from 'react-native';
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
+
+import { borderOverlayImage } from '../../../Authentication/constants';
+
 import { transactionBg } from '../../constants';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
-interface FooterProps {
-  onLayout: (e: LayoutChangeEvent) => void;
-}
-
-const Footer = ({ onLayout }: FooterProps) => {
-  return (
-    <StyledImage
-      onLayout={onLayout}
+const Footer = () => (
+  <StyledImage resizeMode="contain" source={transactionBg}>
+    <BorderOverlay
+      style={{
+        transform: [{ rotate: '90deg' }],
+      }}
       resizeMode="contain"
-      source={transactionBg}
+      source={borderOverlayImage}
     />
-  );
-};
+  </StyledImage>
+);
 
 export default Footer;
 
-const ratio = width / 1500;
+const aspectRatio = 872 / 1500;
+const imgHeight = width * aspectRatio;
 
-const StyledImage = styled.Image`
+const StyledImage = styled.ImageBackground`
   bottom: 0;
   position: absolute;
   width: ${width}px;
-  margin-bottom: ${Platform.OS === 'ios' ? 0 : -30}px;
-  height: ${872 * ratio}px;
+  height: ${imgHeight}px;
+`;
+
+const BorderOverlay = styled.Image`
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  left: -1px;
+  bottom: ${height * 0.15 - 59}px
+  tint-color: #fff;
 `;

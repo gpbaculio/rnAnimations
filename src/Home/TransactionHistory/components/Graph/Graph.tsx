@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
+import moment from 'moment';
 
 import { Underlay } from './components';
 
 import { lerp } from './helpers';
+import {
+  Transition,
+  Transitioning,
+  TransitioningView,
+} from 'react-native-reanimated';
 
 export interface GraphPoint {
   date: number;
   value: number;
   color: string;
-  id: string;
+  id: number;
 }
 
 interface GraphProps {
   data: GraphPoint[];
+  startDate: number;
+  monthsCount: number;
 }
 
 const { width } = Dimensions.get('window');
@@ -24,36 +32,59 @@ const ratio = width / 305;
 const graphWidth = width - 45;
 const graphHeight = 195 * ratio;
 
-const Graph = ({ data }: GraphProps) => {
+const Graph = ({ data, startDate, monthsCount }: GraphProps) => {
   const values = data.map((p) => p.value);
   const containerWidth = graphWidth - 25;
   const height = graphHeight - 25;
   const dates = data.map((p) => p.date);
-  // const minX = Math.min(...dates);
-  // const maxX = Math.max(...dates);
+  const graphRef = useRef<TransitioningView>(null);
+  useLayoutEffect(() => {
+    if (graphRef.current) {
+      graphRef.current.animateNextTransition();
+    }
+  }, []);
   const minY = Math.min(...values);
   const maxY = Math.max(...values);
-  const step = containerWidth / data.length;
+  const step = containerWidth / monthsCount;
+  const transition = (
+    <Transition.Together>
+      <Transition.In
+        type="slide-bottom"
+        durationMs={650}
+        interpolation="easeInOut"
+      />
+    </Transition.Together>
+  );
   return (
     <CanvasContainer>
-      <Underlay {...{ dates, minY, maxY, step }} />
-      <GraphContainer {...{ width: containerWidth, height }}>
-        {data.map((point, i) => {
-          if (point.value === 0) {
-            return null;
-          } else {
-            return (
-              <GraphYContainer
-                height={lerp(0, height, point.value / maxY)}
-                key={point.date}
-                left={i * step}
-                width={step}
-              >
-                <GraphY color={point.color} />
-                <GraphYPoint color={point.color} />
-              </GraphYContainer>
-            );
-          }
+      <Underlay
+        {...{
+          dates,
+          minY,
+          maxY,
+          step,
+          startDate,
+          monthsCount,
+        }}
+      />
+      <GraphContainer
+        {...{ width: containerWidth, height, transition, ref: graphRef }}
+      >
+        {data.map((point) => {
+          const i = Math.round(
+            moment.duration(moment(point.date).diff(startDate)).asMonths(),
+          );
+          return (
+            <GraphYContainer
+              height={lerp(0, height, point.value / maxY)}
+              key={point.id}
+              left={i * step}
+              width={step}
+            >
+              <GraphY color={point.color} />
+              <GraphYPoint color={point.color} />
+            </GraphYContainer>
+          );
         })}
       </GraphContainer>
     </CanvasContainer>
@@ -63,7 +94,7 @@ const Graph = ({ data }: GraphProps) => {
 export default Graph;
 
 const CanvasContainer = styled.View`
-margin-top: 15px;
+  margin-top: 15px;
   width: ${graphWidth}px
   height: ${graphHeight}px 
 `;
@@ -73,12 +104,13 @@ interface GraphContainerProps {
   height: number;
 }
 
-const GraphContainer = styled.View<GraphContainerProps>`
+const GraphContainer = styled(Transitioning.View)<GraphContainerProps>`
   ${(props) => ` 
     width: ${props.width}px;
     height: ${props.height}px; 
-    margin-left: 25px;
   `}
+  margin-left: 25px;
+  overflow: hidden;
 `;
 
 interface GraphYProps {

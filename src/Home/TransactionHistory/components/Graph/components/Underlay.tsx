@@ -1,20 +1,29 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import moment from 'moment';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 
 import { lerp } from '../helpers';
 
 interface UnderlayProps {
-  dates: number[];
-  maxY: number;
   minY: number;
+  maxY: number;
   step: number;
+  startDate: number;
+  monthsCount: number;
 }
-
-const dateFormatter = Intl.DateTimeFormat('en', { month: 'short' });
 
 const ROW_HEIGHT = 16;
 
-const Underlay = ({ dates, maxY, minY, step }: UnderlayProps) => {
+const Underlay = ({
+  minY,
+  maxY,
+  step,
+  startDate,
+  monthsCount,
+}: UnderlayProps) => {
+  const minDate = moment(startDate);
   return (
     <Container>
       <LeftSection>
@@ -30,18 +39,20 @@ const Underlay = ({ dates, maxY, minY, step }: UnderlayProps) => {
               <GraphCountContainer width={25}>
                 <GraphCount>{Math.round(lerp(minY, maxY, i))}</GraphCount>
               </GraphCountContainer>
-
               <GrapBarYhLine />
             </GraphBarYSection>
           );
         })}
       </LeftSection>
       <BottomSection>
-        {dates.map((d, i) => (
-          <MonthContainer key={i} width={step}>
-            <Month>{dateFormatter.format(new Date(d))}</Month>
-          </MonthContainer>
-        ))}
+        {new Array(monthsCount)
+          .fill(0)
+          .map((_, i) => minDate.clone().add(i, 'month'))
+          .map((d, i) => (
+            <MonthContainer key={i} width={step}>
+              <Month>{d.format('MMM')}</Month>
+            </MonthContainer>
+          ))}
       </BottomSection>
     </Container>
   );

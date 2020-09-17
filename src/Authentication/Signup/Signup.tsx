@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 import {
-  Container,
   MainContent,
   FormInput,
   FormErrorMessage,
@@ -13,6 +12,8 @@ import {
   FormSubtitle,
 } from '../components';
 import { topSectionSignUpImg } from '../constants';
+import { Container } from '../../components';
+import { AuthContext } from '../../Navigation/store/context';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -42,8 +43,12 @@ const Signup = () => {
     password: '',
     confirmPassword: '',
   };
-  const onSubmit = (values: FormValues) => {
-    console.log('submit values: ', values);
+
+  const { signUp } = useContext(AuthContext);
+  const onSubmit = ({ email, password }: FormValues) => {
+    if (email && password) {
+      signUp({ email, password });
+    }
   };
   return (
     <Container>

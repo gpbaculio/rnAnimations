@@ -37,22 +37,22 @@ const Container = styled.View`
   bottom: 0;
   flex-direction: column;
   background-color: red;
-  border-top-left-radius: 75px;
+  border-top-left-radius: 60px;
 `;
 
 const FooterContainer = styled.View`
   background-color: #0c0d34;
-  border-top-left-radius: 75px;
+  border-top-left-radius: 60px;
   padding-top: 40px;
   padding-bottom: ${Platform.OS === 'ios' ? 60 : 40}px;
   align-items: center;
 `;
 
 const BorderOverlay = styled.Image`
-  width: 75px;
-  height: 75px;
+  width: 60px;
+  height: 60px;
   position: absolute;
-  margin-top: -74px;
+  margin-top: -59px;
   right: 0;
   tint-color: #0c0d34;
 `;

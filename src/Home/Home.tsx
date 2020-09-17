@@ -9,11 +9,13 @@ import Drawer from './Drawer';
 import OutfitIdeas from './OutfitIdeas';
 import FavoriteOutfits from './FavoriteOutfits';
 import TransactionHistory from './TransactionHistory';
+import { DRAWER_WIDTH } from './Drawer/Drawer';
 
 const HomeDrawer = createDrawerNavigator();
 
 const HomeDrawerNavigator = () => (
   <HomeDrawer.Navigator
+    drawerStyle={{ width: DRAWER_WIDTH }}
     drawerContent={(
       props: DrawerContentComponentProps<DrawerContentOptions>,
     ) => <Drawer {...props} />}

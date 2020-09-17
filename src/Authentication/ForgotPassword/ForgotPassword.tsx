@@ -34,10 +34,9 @@ const ForgotPassword = () => {
   const initialValues: FormValues = {
     email: '',
   };
-  const onSubmit = (values: FormValues) => {
+  const onSubmit = () => {
     // ideally add loading indicator
     setForgotPasswordSuccess(true);
-    console.log('ForgotPassword ', values);
   };
   if (forgotPasswordSuccess) {
     return (

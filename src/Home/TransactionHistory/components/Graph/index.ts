@@ -1,1 +1,1 @@
-export { default } from './Graph';
+export { default, GraphPoint } from './Graph';

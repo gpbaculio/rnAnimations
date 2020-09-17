@@ -35,11 +35,11 @@ const Outfit = ({ outfit }: OutfitProps) => {
               icon: {
                 width: 10,
                 height: 6,
-                color: 'red',
+                color: '#fff',
               },
               container: {
                 size: 30,
-                color: '#fff',
+                color: '#2CB9B0',
               },
               source: iconCheck,
               onPress: () => true,

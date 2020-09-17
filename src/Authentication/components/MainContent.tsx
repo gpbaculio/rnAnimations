@@ -101,7 +101,7 @@ const MainContent = ({
             />
           )}
         </TopSection>
-        <MainContentImageOverlay resizeMode="repeat" source={source} />
+        <MainContentImageOverlay resizeMode="cover" source={source} />
         <MainContentContainer
           topLeftRadius={noTopSectionRadius || !leftRadius}
           topRightRadius={noTopSectionRadius || leftRadius}
@@ -193,14 +193,17 @@ const BottomOverlay = styled.View`
   bottom: 0;
   z-index: 1;
   border: solid black 1px;
-  height: 75px;
+  height: 60px;
   background-color: black;
   position: absolute;
 `;
 
+const aspectRatio = 750 / 1125;
+const imgHeight = width * aspectRatio;
+
 const MainContentImageOverlay = styled.Image` 
-  width: 100%;
-  height: ${width}px; 
+  width: ${width}px; 
+  height: ${imgHeight}px; 
   top: 0;
   background-color: #fff
   position: absolute;

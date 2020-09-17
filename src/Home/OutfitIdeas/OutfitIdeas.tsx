@@ -103,10 +103,10 @@ const CardsContainer = styled.View`
 `;
 
 const BorderOverlay = styled.Image`
-  width: 65px;
-  height: 65px;
+  width: 60px;
+  height: 60px;
   position: absolute;
-  margin-top: -63px;
+  margin-top: -59px;
   right: -1px;
   tint-color: #0c0d34;
 `;
@@ -135,5 +135,5 @@ const BottomOverlay = styled.View`
   height: ${height * 0.175}px;
   background-color: #0c0d34;
   margin-top: -60px;
-  border-top-left-radius: 65px;
+  border-top-left-radius: 60px;
 `;

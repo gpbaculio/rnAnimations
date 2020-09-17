@@ -3,21 +3,26 @@ import styled from 'styled-components/native';
 import { BORDER_RADIUS } from '../OnBoarding/OnBoarding';
 import { StyledOnBoardingImg } from '../OnBoarding/Slide';
 import { SubTitle, Description, FormButton } from '../components';
-import { StackNavigationProps, Routes } from '../../Navigation';
 import { Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const welcomeImgSrc = require('../../../assets/images/4.png');
 
-interface WelcomeProps extends StackNavigationProps<Routes, 'Welcome'> {
+interface WelcomeProps {
   welcomeImg: number;
 }
 
-const Welcome = ({ welcomeImg, navigation }: WelcomeProps) => {
+const Welcome = ({ welcomeImg }: WelcomeProps) => {
+  const navigation = useNavigation();
   const onLoginPress = () => {
     navigation.navigate('Login');
   };
-  const onJoinUsPress = () => {};
-  const onForgotPasswordPress = () => {};
+  const onJoinUsPress = () => {
+    navigation.navigate('Signup');
+  };
+  const onForgotPasswordPress = () => {
+    navigation.navigate('ForgotPassword');
+  };
   return (
     <Container>
       <TopSection>

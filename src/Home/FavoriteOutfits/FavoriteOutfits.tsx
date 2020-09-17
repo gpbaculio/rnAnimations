@@ -97,7 +97,10 @@ const FavoriteOutfits = () => {
     }
   };
   const transition = (
-    <Transition.Change interpolation="easeInOut" durationMs={500} />
+    <Transition.Together>
+      <Transition.Out type="fade" />
+      <Transition.In type="fade" />
+    </Transition.Together>
   );
   return (
     <Container>

@@ -1,4 +1,4 @@
-export const bottomSectionDrawerImg = require('../../assets/images/profile-pattern.png');
+export const bottomSectionDrawerImg = require('../../assets/images/pattern1.png');
 export const iconHeart = require('../../assets/images/icons/icon-heart.png');
 export const iconClock = require('../../assets/images/icons/icon-history.png');
 export const iconPerson = require('../../assets/images/icons/icon-user.png');
@@ -13,7 +13,7 @@ export const iconCheck = require('../../assets/images/icons/icon-check.png');
 export const iconShare = require('../../assets/images/icons/icon-share.png');
 export const iconBackDark = require('../../assets/images/icons/icon-back-dark.png');
 export const transactionBg = require('../../assets/images/transaction-bg-pattern.png');
-
+export const BORDER_RADIUS = 60;
 export const homeAssets = [
   iconHeart,
   iconClock,

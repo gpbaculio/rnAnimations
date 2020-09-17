@@ -1,5 +1,5 @@
-import React from 'react';
-import { Dimensions, Platform } from 'react-native';
+import React, { useContext } from 'react';
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 import {
   DrawerContentComponentProps,
@@ -9,7 +9,6 @@ import {
 import { RoundIcon, Header } from '../components';
 import { Container, ColumnView } from '../../components';
 import {
-  bottomSectionDrawerImg,
   iconZap,
   iconLogout,
   iconGear,
@@ -18,10 +17,17 @@ import {
   iconHeart,
   iconClose,
   iconShoppingBag,
+  bottomSectionDrawerImg,
 } from '../constants';
 import { DrawerActions } from '@react-navigation/native';
+import { borderOverlayImage } from '../../Authentication/constants';
+import { AuthContext } from '../../Navigation/store/context';
 
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
+
+export const DRAWER_WIDTH = width * 0.8;
+const aspectRatio = 750 / 1125;
+const imgHeight = DRAWER_WIDTH * aspectRatio;
 
 const Drawer = ({
   navigation,
@@ -33,6 +39,10 @@ const Drawer = ({
     return () => {
       navigation.navigate(route);
     };
+  };
+  const { signOut } = useContext(AuthContext);
+  const onLogout = () => {
+    signOut();
   };
   return (
     <Container>
@@ -147,7 +157,7 @@ const Drawer = ({
               />
               <NavLabel>Notification Settings</NavLabel>
             </NavContainer>
-            <NavContainer>
+            <NavContainer onPress={onLogout}>
               <RoundIcon
                 {...{
                   icon: {
@@ -166,14 +176,29 @@ const Drawer = ({
             </NavContainer>
           </ColumnView>
         </MainContent>
+        <BorderOverlay
+          style={{
+            transform: [{ rotate: '90deg' }],
+          }}
+          resizeMode="contain"
+          source={borderOverlayImage}
+        />
       </MainContentContainer>
-      <StyledImage resizeMode="stretch" source={bottomSectionDrawerImg} />
+      <StyledImage resizeMode="cover" source={bottomSectionDrawerImg} />
     </Container>
   );
 };
 
 export default Drawer;
 
+const BorderOverlay = styled.Image`
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  bottom: -59px;
+  left: 0;
+  tint-color: #fff;
+`;
 const NavContainer = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
@@ -199,6 +224,7 @@ const NavCount = styled.Text`
   line-height: 19px;
   color: rgba(12, 13, 52, 0.3);
 `;
+
 const UserName = styled.Text`
   font-family: SFProTextRegular;
   font-style: normal;
@@ -220,13 +246,13 @@ const Email = styled.Text`
   text-align: center;
   color: #0c0d34;
   opacity: 0.5;
-  margin-bottom: 32px;
+  margin-bottom: 12px;
 `;
 
 const ProfileContainer = styled.View`
   width: 100px;
   height: 100px;
-  border-radius: 50px;
+  border-radius: 60px;
   background-color: #beecc4;
   position: absolute;
   top: -50px;
@@ -235,7 +261,7 @@ const ProfileContainer = styled.View`
 const TopSection = styled.View`
   width: 100%;
   flex: 0.2;
-  border-bottom-right-radius: 50px;
+  border-bottom-right-radius: 60px;
   background-color: #111747;
 `;
 
@@ -248,25 +274,25 @@ const TopOverlay = styled.View`
 
 const MainContent = styled.View`
   flex: 1;
-  border-top-left-radius: 50px;
-  border-bottom-right-radius: 50px;
+  padding-horizontal: 15px;
+  border-top-left-radius: 60px;
+  border-bottom-right-radius: 60px;
   background-color: #fff;
   align-items: center;
   justify-content: center;
 `;
 
 const MainContentContainer = styled.View`
-  flex: 1;
+  flex: 0.9;
   background-color: #fff;
-  border-bottom-right-radius: 50px;
-  margin-bottom: ${height * 0.2 - (Platform.OS === 'ios' ? 80 : 60)}px;
+  border-bottom-right-radius: 60px;
+  margin-bottom: ${height * 0.15}px;
   z-index: 9;
 `;
 
 const StyledImage = styled.Image`
-  width: 100%;
-  height: ${height * 0.2}px;
+  width: ${DRAWER_WIDTH}px;
+  height: ${imgHeight}px;
   bottom: 0;
   position: absolute;
-  background-color: #fff;
 `;
